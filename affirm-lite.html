@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Page</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        header {
+            padding: 20px 0;
+            text-align: center;
+            background-color: #222;
+            color: #fff;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        .checkout-form {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .form-group select {
+            width: 100%;
+        }
+        .form-group textarea {
+            height: 100px;
+        }
+        .cart-summary {
+            flex: 1;
+            background-color: #f1f1f1;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .cart-summary h3 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .cart-item img {
+            width: 80px;
+            height: auto;
+            margin-right: 20px;
+        }
+        .total-price {
+            font-size: 20px;
+            margin-top: 16px;
+            text-align: right;
+        }
+
+        .checkout-btn {
+            background-color: #222;
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .checkout-btn:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+        .checkout-btn:hover:not(:disabled) {
+            background-color: #333;
+        }
+        .address-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .order-confirmation {
+            text-align: center;
+            padding: 40px;
+        }
+        .order-confirmation img {
+            width: 300px;
+            height: auto;
+        }
+        .order-confirmation h2 {
+            font-size: 32px;
+            margin-top: 20px;
+        }
+        .order-confirmation p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Checkout</h1>
+    </header>
+    
+    <div class="container" id="checkout-container">
+        <div class="checkout-form">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="John Doe" required value="John Doe">
+            </div>
+            <div class="address-grid">
+                <div class="form-group">
+                    <label for="street">Street Address</label>
+                    <input type="text" id="street" name="street" placeholder="123 Main Street" required value="123 Main Street">
+                </div>
+                <div class="form-group">
+                    <label for="street2">Street Address 2 (Optional)</label>
+                    <input type="text" id="street2" name="street2" placeholder="Apartment, suite, etc." optional>
+                </div>
+            </div>
+            <div class="address-grid">
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" placeholder="Seattle" required value="Seattle">
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <select id="state" name="state" required>
+                        <option value="WA" selected>Washington (WA)</option>
+                        <option value="CA">California (CA)</option>
+                        <option value="NY">New York (NY)</option>
+                        <option value="TX">Texas (TX)</option>
+                        <option value="FL">Florida (FL)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="zip">Zip Code</label>
+                <input type="text" id="zip" name="zip" placeholder="98039" value="98039" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="credit-card">Credit Card Number</label>
+                <input type="text" id="credit-card" name="credit-card" placeholder="1234 5678 1234 5678" required>
+            </div>
+            <div class="form-group">
+                <label for="expiry">Expiration Date (MM/YY)</label>
+                <input type="text" id="expiry" name="expiry" placeholder="MM/YY" required>
+            </div>
+            <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" placeholder="123" required>
+            </div>
+        </div>
+        
+        <div class="cart-summary">
+            <h3>Cart Summary</h3>
+            <div class="cart-item">
+                <img src="https://media.istockphoto.com/id/638043774/photo/modern-curved-4k-ultrahd-tv.jpg?s=612x612&w=0&k=20&c=ZJBK7-64tG3uPBtXuUnWt-lAPSqz_nBlYXNYsVtmRtc=" alt="TV">
+                <div>
+                    <p><strong>TV</strong></p>
+                    <p>Price: <strong>$999.99</strong></p>
+                </div>
+            </div>
+            <div class="total-price">
+                <p><strong>Total: <span id="total-price" value="999.99">$999.99</span></strong></p>
+            </div>
+            <button
+              type="button" 
+              data-fallback-url="https://affirm.com/"      
+              class="affirm-lite-checkout affirm-checkout-btn"
+              data-total-amount-tag="#total-price">
+              Pay With Affirm
+            </button>
+            <button class="checkout-btn" id="place-order-btn" type="button" disabled>Place Order</button>
+        </div>
+    </div>
+
+    <div class="order-confirmation" id="order-confirmation" style="display: none;">
+        <img src="https://media.istockphoto.com/id/638043774/photo/modern-curved-4k-ultrahd-tv.jpg?s=612x612&w=0&k=20&c=ZJBK7-64tG3uPBtXuUnWt-lAPSqz_nBlYXNYsVtmRtc=" alt="TV">
+        <h2>Order Confirmed!</h2>
+        <p><strong>Order Number:</strong> <span id="order-number"></span></p>
+        <p><strong>Shipping Address:</strong></p>
+        <p id="shipping-address"></p>
+        <p><strong>Credit Card (Last 4 digits):</strong> <span id="last-four-cc"></span></p>
+    </div>
+
+    <script>
+        // Function to check if all fields are filled
+        function validateForm() {
+            const name = document.getElementById("name").value;
+            const street = document.getElementById("street").value;
+            const city = document.getElementById("city").value;
+            const state = document.getElementById("state").value;
+            const zip = document.getElementById("zip").value;
+            const creditCard = document.getElementById("credit-card").value;
+            const expiry = document.getElementById("expiry").value;
+            const cvv = document.getElementById("cvv").value;
+            
+            const isValid = name && street && city && state && zip && creditCard && expiry && cvv;
+            document.getElementById("place-order-btn").disabled = !isValid;
+        }
+
+        // Listen for changes to input fields and validate form
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('input', validateForm);
+        });
+
+        // Function to generate a random order number
+        function generateOrderNumber() {
+            return Math.floor(Math.random() * 1000000);
+        }
+
+        // Function to handle order placement
+        document.getElementById("place-order-btn").addEventListener('click', () => {
+            // Get user input values
+            const name = document.getElementById("name").value;
+            const street = document.getElementById("street").value;
+            const street2 = document.getElementById("street2").value;
+            const city = document.getElementById("city").value;
+            const state = document.getElementById("state").value;
+            const zip = document.getElementById("zip").value;
+            const creditCard = document.getElementById("credit-card").value;
+
+            // Get the last 4 digits of the credit card number
+            const lastFourCC = creditCard.slice(-4);
+
+            // Generate a random order number
+            const orderNumber = generateOrderNumber();
+
+            // Format the shipping address
+            const shippingAddress = `${name}, ${street} ${street2 ? street2 : ""}, ${city}, ${state} ${zip}`;
+
+            // Hide checkout form and show confirmation
+            document.getElementById("checkout-container").style.display = 'none';
+            document.getElementById("order-confirmation").style.display = 'block';
+
+            // Set order confirmation values
+            document.getElementById("order-number").textContent = orderNumber;
+            document.getElementById("shipping-address").textContent = shippingAddress;
+            document.getElementById("last-four-cc").textContent = lastFourCC;
+        });
+
+        // Initial validation
+        validateForm();
+    </script>
+
+    <script>
+        var _affirm_config = {
+                public_api_key: "1JBIENSSOW6S62OV", 
+                script: "https://sandbox.affirm-stage.com/js/v2/affirm.js",
+                locale: "en_US",
+                country_code: "USA",
+            };
+
+        (function(m,g,n,d,a,e,h,c){var b=m[n]||{},k=document.createElement(e),p=document.getElementsByTagName(e)[0],l=function(a,b,c){return function(){a[b]._.push([c,arguments])}};b[d]=l(b,d,"set");var f=b[d];b[a]={};b[a]._=[];f._=[];b._=[];b[a][h]=l(b,a,h);b[c]=function(){b._.push([h,arguments])};a=0;for(c="set add save post open empty reset on off trigger ready setProduct".split(" ");a<c.length;a++)f[c[a]]=l(b,d,c[a]);a=0;for(c=["get","token","url","items"];a<c.length;a++)f[c[a]]=function(){};k.async=
+          !0;k.src=g[e];p.parentNode.insertBefore(k,p);delete g[e];f(g);m[n]=b})(window,_affirm_config,"affirm","checkout","ui","script","ready","jsReady");
+        </script>
+</body>
+</html>
